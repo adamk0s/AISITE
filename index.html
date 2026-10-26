@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KarlovarskéPneu | Zimní • Letní • Celoroční pneumatiky</title>
+<style>
+  :root {
+    --primary: #0f172a;
+    --accent: #f97316;
+    --accent2: #38bdf8;
+    --text: #e2e8f0;
+    --card: #1e293b;
+    --success: #22c55e;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s ease;
+  }
+
+  nav.scrolled {
+    padding: 0.7rem 5%;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 26px;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+    top: -200px;
+    right: -100px;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+    bottom: -100px;
+    left: -50px;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(5deg); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1.5px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: var(--card);
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .badge:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 25px rgba(249,115,22,0.2);
+  }
+
+  /* Sections */
+  section {
+    padding: 5rem 5%;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-title h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title p {
+    opacity: 0.7;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  /* Tire Cards */
+  .tires-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tire-card {
+    background: var(--card);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .tire-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .tire-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    border-color: rgba(249,115,22,0.3);
+  }
+
+  .tire-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .tire-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(249,115,22,0.15);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s;
+  }
+
+  .tire-card:hover .tire-icon {
+    background: var(--accent);
+    transform: scale(1.1) rotate(8deg);
+  }
+
+  .tire-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  .tire-card p {
+    opacity: 0.75;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .tire-features {
+    list-style: none;
+  }
+
+  .tire-features li {
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tire-features li::before {
+    content: '✓';
+    color: var(--success);
+    font-weight: bold;
+  }
+
+  /* Features */
+  .features {
+    background: linear-gradient(180deg, var(--primary) 0%, #0c1222 100%);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-item {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s;
+  }
+
+  .feature-item:hover {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.2);
+    transform: translateY(-5px);
+  }
+
+  .feature-item .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .feature-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .feature-item p {
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+
+  /* Interactive Tire Selector */
+  .selector {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+  }
+
+  .tab-btn.active,
+  .tab-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tab-panel {
+    background: var(--card);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .tab-panel .info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  .tab-panel .info p {
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent2);
+  }
+
+  .stat .label {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+
+  .visual {
+    height: 220px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tire-shape {
+    width: 140px;
+    height: 140px;
+    border: 18px solid #334155;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 12s linear infinite;
+  }
+
+  .tire-shape::before {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border: 8px dashed #475569;
+    border-radius: 50%;
+  }
+
+  .tire-shape::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    background: #0f172a;
+    border-radius: 50%;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Why us */
+  .why-us {
+    background: #0c1222;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .why-card {
+    background: var(--card);
+    padding: 1.8rem;
+    border-radius: 1.2rem;
+    border-left: 4px solid var(--accent);
+    transition: all 0.3s;
+  }
+
+  .why-card:hover {
+    transform: translateX(8px);
+    background: #243044;
+  }
+
+  .why-card h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .why-card p {
+    opacity: 0.75;
+    font-size: 0.95rem;
+  }
+
+  /* Footer */
+  footer {
+    background: #020617;
+    padding: 3rem 5% 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .footer-logo span {
+    color: var(--accent);
+  }
+
+  .footer-info {
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.85rem;
+    opacity: 0.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      top: 70px;
+      right: -100%;
+      width: 70%;
+      height: calc(100vh - 70px);
+      background: var(--primary);
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1.5rem;
+      transition: right 0.4s ease;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-links.open {
+      right: 0;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -6px);
+    }
+
+    .tab-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  /* Scroll animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <div class="logo">Karlovarské<span>Pneu</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#domu">Domů</a></li>
+    <li><a href="#pneumatiky">Pneumatiky</a></li>
+    <li><a href="#vyhody">Výhody</a></li>
+    <li><a href="#proc-my">Proč my</a></li>
+  </ul>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="domu">
+  <div class="hero-content">
+    <h1>Bezpečnost na silnici<br>začíná u <span>správných pneumatik</span></h1>
+    <p>KarlovarskéPneu – specialista na zimní, letní a celoroční pneumatiky. Kvalita, odbornost a férový přístup.</p>
+    <div class="hero-badges">
+      <div class="badge">❄️ Zimní</div>
+      <div class="badge">☀️ Letní</div>
+      <div class="badge">🔄 Celoroční</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pneumatiky -->
+<section id="pneumatiky">
+  <div class="section-title reveal">
+    <h2>Naše pneumatiky</h2>
+    <p>Vyberte si podle sezóny – máme řešení pro každý typ jízdy</p>
+  </div>
+
+  <div class="tires-grid">
+    <div class="tire-card reveal">
+      <div class="tire-icon">❄️</div>
+      <h3>Zimní pneumatiky</h3>
+      <p>Maximální přilnavost a bezpečnost na sněhu, ledu i mokré vozovce.</p>
+      <ul class="tire-features">
+        <li>Výborná trakce na sněhu</li>
+        <li>Krátká brzdná dráha</li>
+        <li>Měkká směs pro nízké teploty</li>
+        <li>Hloubka dezénu ≥ 4 mm</li>
+      </ul>
+    </div>
+
+    <div class="tire-card reveal">
+      <div class="tire-icon">☀️</div>
+      <h3>Letní pneumatiky</h3>
+      <p>Optimální výkon v teplém počasí, výborné ovládání a nízká spotřeba.</p>
+      <ul class="tire-features">
+        <li>Přesné řízení</li>
+        <li>Krátká brzdná dráha na suchu</li>
+        <li>Nízký valivý odpor</li>
+        <li>Vysoká odolnost</li>
+      </ul>
+    </div>
+
+    <div class="tire-card reveal">
+      <div class="tire-icon">🔄</div>
+      <h3>Celoroční pneumatiky</h3>
+      <p>Kompromis pro řidiče, kteří chtějí jednu sadu na celý rok.</p>
+      <ul class="tire-features">
+        <li>Dobré vlastnosti v zimě i létě</li>
+        <li>Úspora času a peněz</li>
+        <li>Vhodné pro mírné zimy</li>
+        <li>Univerzální použití</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Selector -->
+<section class="features" id="vyhody">
+  <div class="section-title reveal">
+    <h2>Porovnejte si typy</h2>
+    <p>Klikněte na kategorii a zjistěte více</p>
+  </div>
+
+  <div class="selector reveal">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="zima">Zimní</button>
+      <button class="tab-btn" data-tab="leto">Letní</button>
+      <button class="tab-btn" data-tab="celorocni">Celoroční</button>
+    </div>
+
+    <div class="tab-content active" id="zima">
+      <div class="tab-panel">
+        <div class="info">
+          <h3>Zimní pneumatiky</h3>
+          <p>Ideální od října do března. Speciální směs zůstává pružná i při teplotách pod 7 °C a poskytuje maximální bezpečnost.</p>
+          <div class="stats">
+            <div class="stat">
+              <div class="number">−30 %</div>
+              <div class="label">brzdná dráha</div>
+            </div>
+            <div class="stat">
+              <div class="number">4 mm+</div>
+              <div class="label">doporučená hloubka</div>
+            </div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="tire-shape"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="leto">
+      <div class="tab-panel">
+        <div class="info">
+          <h3>Letní pneumatiky</h3>
+          <p>Nejlepší volba od dubna do září. Tvrďší směs zajišťuje přesné řízení, kratší brzdnou dráhu a nižší spotřebu paliva.</p>
+          <div class="stats">
+            <div class="stat">
+              <div class="number">+15 %</div>
+              <div class="label">lepší ovládání</div>
+            </div>
+            <div class="stat">
+              <div class="number">−8 %</div>
+              <div class="label">spotřeba paliva</div>
+            </div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="tire-shape" style="border-color:#f97316"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="celorocni">
+      <div class="tab-panel">
+        <div class="info">
+          <h3>Celoroční pneumatiky</h3>
+          <p>Praktické řešení pro řidiče s nižším nájezdem a mírnými zimami. Jedna sada = žádné přezouvání.</p>
+          <div class="stats">
+            <div class="stat">
+              <div class="number">1 sada</div>
+              <div class="label">na celý rok</div>
+            </div>
+            <div class="stat">
+              <div class="number">−2×</div>
+              <div class="label">náklady na přezutí</div>
+            </div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="tire-shape" style="border-color:#38bdf8"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Proč my -->
+<section class="why-us" id="proc-my">
+  <div class="section-title reveal">
+    <h2>Proč KarlovarskéPneu?</h2>
+    <p>Protože nám záleží na vaší bezpečnosti i peněžence</p>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <h4>Odborné poradenství</h4>
+      <p>Pomůžeme vám vybrat správnou pneumatiku přesně pro vaše auto a styl jízdy.</p>
+    </div>
+    <div class="why-card reveal">
+      <h4>Široký výběr</h4>
+      <p>Od prémiových značek až po kvalitní střední třídu – vždy něco pro každý rozpočet.</p>
+    </div>
+    <div class="why-card reveal">
+      <h4>Rychlé dodání</h4>
+      <p>Většinu modelů máme skladem a doručíme je během pár dní po celém Karlovarském kraji.</p>
+    </div>
+    <div class="why-card reveal">
+      <h4>Férové ceny</h4>
+      <p>Transparentní ceník bez skrytých poplatků. Co vidíte, to platí.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Karlovarské<span>Pneu</span></div>
+  <div class="footer-info">
+    Specialista na zimní, letní a celoroční pneumatiky<br>
+    Karlovy Vary a okolí
+  </div>
+  <div class="footer-bottom">
+    © 2025 KarlovarskéPneu • Fiktivní společnost pro ukázku webu
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+
+  // Close menu when clicking a link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Tab switching
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      // Add active
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+    reveals.forEach(el => {
+      const elementTop = el.getBoundingClientRect().top;
+      if (elementTop < windowHeight - 80) {
+        el.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+</script>
+</body>
+</html>
